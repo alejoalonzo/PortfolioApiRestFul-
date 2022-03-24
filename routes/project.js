@@ -21,5 +21,6 @@ router.post(
   multipartMiddlewere,
   ProjectController.uploadImg
 );
+router.get("/getImage/:image", ProjectController.getImageFile);
 
 module.exports = router;
