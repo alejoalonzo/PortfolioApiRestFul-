@@ -8,6 +8,8 @@ var projectSchema = Schema({
   category: String,
   langs: String,
   image: String,
+  repository: String,
+  preview: String,
 });
 
 //los dos parametros que se le pasan son el nombre en la base de dato y y nombre de la clase Schema

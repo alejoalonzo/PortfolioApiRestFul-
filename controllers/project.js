@@ -29,6 +29,8 @@ var controller = {
     project.category = params.category;
     project.langs = params.langs;
     project.image = null;
+    project.repository = params.repository;
+    project.preview = params.preview;
 
     //Guardar enb la base de datos
     project.save((err, projectStored) => {
