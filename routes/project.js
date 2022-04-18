@@ -22,5 +22,9 @@ router.post(
   ProjectController.uploadImg
 );
 router.get("/getImage/:image", ProjectController.getImageFile);
+//---------------------------------------------------------------------------
+
+router.get("/homeContact", ProjectController.homeContact);
+router.post("/sent-email", ProjectController.saveContact);
 
 module.exports = router;

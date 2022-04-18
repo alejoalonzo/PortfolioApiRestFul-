@@ -3,6 +3,8 @@ const project = require("../models/project");
 var Project = require("../models/project");
 var fs = require("fs");
 const { exists } = require("../models/project");
+const contact = require("../models/contact");
+var Contact = require("../models/contact");
 var path = require("path");
 
 var controller = {
@@ -15,6 +17,45 @@ var controller = {
     return res.status(200).send({
       message: "Soy el metodo o accion test del controlador Project",
     });
+  },
+
+  //*******************************************************CONTACT********************************************************
+
+  homeContact: function (req, res) {
+    return res.status(200).send({
+      message: "Soy la home del backend de contacto",
+    });
+  },
+  saveContact: function (req, res) {
+    var contact = new Contact();
+
+    var params = req.body;
+    contact.name = params.name;
+    contact.email = params.email;
+    contact.subject = params.subject;
+    contact.message = params.message;
+
+    //Guardar enb la base de datos
+    contact.save((err, contactStored) => {
+      if (err) {
+        return res
+          .status(500)
+          .send({ message: "Error al guardar el contacto" });
+      }
+      if (!contactStored) {
+        return res
+          .status(404)
+          .send({ message: "No se ha podido guardar el contacto" });
+      }
+      return res.status(200).send({ contact: contactStored });
+    });
+
+    /*Pueba en postman
+        return res.status(200).send({
+          //params: params,
+          project: project,
+          message: "Nuevo proyecto ok",
+        });*/
   },
 
   //*******************************************************CRUD********************************************************
