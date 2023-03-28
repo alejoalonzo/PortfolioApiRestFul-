@@ -1,5 +1,4 @@
 "use strict";
-
 //conexion entre la base de datos mongobd y la apirest de express
 var mongoose = require("mongoose");
 

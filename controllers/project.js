@@ -1,6 +1,6 @@
 "use strict";
 const project = require("../models/project");
-const config = require("./global");
+const config = require("../global");
 const nodemailer = require("nodemailer");
 var Project = require("../models/project");
 var fs = require("fs");
