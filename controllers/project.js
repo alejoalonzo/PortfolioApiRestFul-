@@ -282,7 +282,7 @@ var controller = {
     if (!config.OPENAI_API_KEY) {
       return res.status(404).send({ message: "API KEY IS NOT AVAILABLE" });
     }
-    return res.status(200).send(config.OPENAI_API_KEY);
+    return res.status(200).send({ key: config.OPENAI_API_KEY });
   },
 };
 
