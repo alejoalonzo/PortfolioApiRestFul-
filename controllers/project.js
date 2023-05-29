@@ -1,5 +1,7 @@
 "use strict";
 const project = require("../models/project");
+const config = require("../global");
+const nodemailer = require("nodemailer");
 var Project = require("../models/project");
 var fs = require("fs");
 const { exists } = require("../models/project");
@@ -21,6 +23,7 @@ var controller = {
 
   //*******************************************************CONTACT********************************************************
 
+  //password= cslmvqfcjerbykkj
   homeContact: function (req, res) {
     return res.status(200).send({
       message: "Soy la home del backend de contacto",
@@ -47,6 +50,40 @@ var controller = {
           .status(404)
           .send({ message: "No se ha podido guardar el contacto" });
       }
+
+      // Send email
+      // create reusable transporter object using the default SMTP transport
+      const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        auth: {
+          user: config.email, // generated ethereal user
+          pass: config.emailPassword, // generated ethereal password
+        },
+        tls: {
+          rejectUnauthorized: false, //Exchange for the SSL(following)
+        },
+        //tls: {
+        //ca: fs.readFileSync('/path/to/ca.pem'), // path to the CA certificate
+        //},
+      });
+      console.log("Client email:", contact.email);
+      const mailOptions = {
+        from: '"Alejo 👻" <' + config.emailPassword + ">",
+        to: config.email,
+        subject: contact.subject,
+        text: `Email from: ${contact.email}\n\n${contact.message}`,
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      });
+
       return res.status(200).send({ contact: contactStored });
     });
 
@@ -239,6 +276,13 @@ var controller = {
         return res.sendFile(path.resolve(path_file));
       }
     });
+  },
+  //---------------------------------------------OpenAI KEY--------------------------------------------------
+  getOpenAI: function (req, res) {
+    if (!config.OPENAI_API_KEY) {
+      return res.status(404).send({ message: "API KEY IS NOT AVAILABLE" });
+    }
+    return res.status(200).send({ key: config.OPENAI_API_KEY });
   },
 };
 

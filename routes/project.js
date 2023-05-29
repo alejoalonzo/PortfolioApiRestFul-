@@ -16,6 +16,7 @@ router.get("/project/:id?", ProjectController.getProject);
 router.get("/projects", ProjectController.getProjects);
 router.put("/project/:id", ProjectController.updateProject);
 router.delete("/project/:id", ProjectController.deleteProject);
+router.get("/openai-key", ProjectController.getOpenAI);
 router.post(
   "/uploadImage/:id",
   multipartMiddlewere,
